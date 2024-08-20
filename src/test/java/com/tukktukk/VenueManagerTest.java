@@ -1,18 +1,17 @@
 package com.tukktukk;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
+import static com.tukktukk.MatchStatus.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class VenueManagerTest {
 
     @Test
-    @DisplayName("경기장(Stadium) 등록 테스트")
-    void registerStadiumTest() {
+    void Stadium_등록_테스트() {
         //given
         VenueManager venueManager = new VenueManager();
         Stadium stadium = new Stadium("Estadio Santiago Bernabeu", "Concha Espinaga 1, 28036");
@@ -23,13 +22,12 @@ public class VenueManagerTest {
     }
 
     @Test
-    @DisplayName("코트(court) 등록 테스트")
-    void registerCourtTest() {
+    void Court_등록_테스트() {
         //given
         VenueManager venueManager = new VenueManager();
         Stadium stadium = new Stadium("Estadio Santiago Bernabeu", "Concha Espinaga 1, 28036");
         venueManager.registerStadium(stadium);
-        Court court = new Court("베르나베우 A 구장", 10, 18);
+        Court court = new Court("베르나베우 A 구장", CourtType.SIX_TO_SIX);
 
         //when
         venueManager.registerCourt(stadium, court);
@@ -38,13 +36,12 @@ public class VenueManagerTest {
     }
 
     @Test
-    @DisplayName("경기(Match) 등록 테스트")
-    void createMatchTest() {
+    void Match_등록_테스트() {
         //given
         VenueManager venueManager = new VenueManager();
         Stadium stadium = new Stadium("Estadio Santiago Bernabeu", "Concha Espinaga 1, 28036");
         venueManager.registerStadium(stadium);
-        Court court = new Court("베르나베우 A 구장", 10, 18);
+        Court court = new Court("베르나베우 A 구장", CourtType.SIX_TO_SIX);
         venueManager.registerCourt(stadium, court);
 
         //when
@@ -56,5 +53,6 @@ public class VenueManagerTest {
         assertEquals(match.getPlayTime(), 2);
         assertEquals(match.getStartTime(), LocalDateTime.of(2024, 8, 25, 18, 0));
         assertEquals(match.getEndTime(), LocalDateTime.of(2024, 8, 25, 20, 0));
+        assertEquals(match.getStatus(), AVAILABLE);
     }
 }
