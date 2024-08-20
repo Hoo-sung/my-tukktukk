@@ -6,17 +6,21 @@ import java.util.List;
 
 public class VenueManager {
 
-    private List<Stadium> stadiums = new ArrayList<>();
+    private final List<Stadium> stadiums = new ArrayList<>();
 
-    public void registerStadium(Stadium stadium) {
+    public void registerStadium(final Stadium stadium) {
         stadiums.add(stadium);
     }
 
-    public Match createMatch(Stadium stadium, LocalDateTime startTime, LocalDateTime endTime, Integer playTime) {
-        return new Match(stadium, startTime, endTime, playTime);
+    public void registerCourt(final Stadium stadium, final Court court) {
+        stadium.addCourt(court);
     }
 
-    public boolean isStadiumRegistered(Stadium stadium) {
+    public Match createMatch(final Court court, final LocalDateTime startTime, final LocalDateTime endTime, final Integer playTime) {
+        return Match.createMatch(court, startTime, endTime, playTime);
+    }
+
+    public boolean isStadiumRegistered(final Stadium stadium) {
         return stadiums.contains(stadium);
     }
 }
