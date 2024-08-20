@@ -27,9 +27,11 @@ public class Match {
         return new Match(court, startTime, endTime, playTime);
     }
 
+    public boolean contains(final Player player) {
+        return players.contains(player);
+    }
+
     public void addPlayer(final Player player) {
         players.add(player);
     }
-
-
 }
