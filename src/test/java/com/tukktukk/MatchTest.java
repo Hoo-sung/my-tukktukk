@@ -1,6 +1,5 @@
 package com.tukktukk;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +7,9 @@ import java.time.LocalDateTime;
 import java.util.stream.IntStream;
 
 import static com.tukktukk.CourtType.*;
+import static com.tukktukk.MatchStatus.*;
+import static com.tukktukk.MatchStatus.AVAILABLE;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MatchTest {
 
@@ -26,7 +28,7 @@ public class MatchTest {
             IntStream.range(0, SIX_TO_SIX.getMinimumPlayer() - 4).forEach(i -> match.addPlayer(new Player()));
 
             //then
-            Assertions.assertEquals(match.getPlayers().size(), SIX_TO_SIX.getMinimumPlayer() - 4);
+            assertEquals(match.getPlayers().size(), SIX_TO_SIX.getMinimumPlayer() - 4);
         }
 
 
@@ -43,8 +45,8 @@ public class MatchTest {
             match.addPlayer(player);
 
             //then
-            IllegalStateException exception = Assertions.assertThrows(IllegalStateException.class, () -> match.addPlayer(player));
-            Assertions.assertEquals("Player already exists", exception.getMessage());
+            IllegalStateException exception = assertThrows(IllegalStateException.class, () -> match.addPlayer(player));
+            assertEquals("Player already exists", exception.getMessage());
         }
 
         @Test
@@ -56,12 +58,72 @@ public class MatchTest {
             Match match = Match.createMatch(court, LocalDateTime.of(2024, 8, 20, 18, 0), LocalDateTime.of(2024, 8, 20, 20, 0), 2);
 
             //when
-            IntStream.range(0, SIX_TO_SIX.getMinimumPlayer()).forEach(i -> match.addPlayer(new Player()));
+            IntStream.range(0, SIX_TO_SIX.getMaximumPlayer()).forEach(i -> match.addPlayer(new Player()));
+            IllegalStateException exception = assertThrows(IllegalStateException.class, () -> match.addPlayer(new Player()));
 
             //then
-            Assertions.assertEquals(match.getStatus(), MatchStatus.CLOSED);
-            IllegalStateException exception = Assertions.assertThrows(IllegalStateException.class, () -> match.addPlayer(new Player()));
-            Assertions.assertEquals("Can't add player. Match is not available for new players.", exception.getMessage());
+            assertEquals(match.getStatus(), CLOSED);
+            assertEquals("Can't add player. Match is not available for new players.", exception.getMessage());
+        }
+    }
+
+    @Nested
+    class removePlayer {
+
+        @Test
+        void CourtStatus_변경없는_정상_일반_테스트() {
+            //given
+            Stadium stadium = new Stadium("Estadio Santiago Bernabeu", "Concha Espinaga 1, 28036");
+            Court court = new Court("베르나베우 A 구장", SIX_TO_SIX);
+            stadium.addCourt(court);
+            Match match = Match.createMatch(court, LocalDateTime.of(2024, 8, 20, 18, 0), LocalDateTime.of(2024, 8, 20, 20, 0), 2);
+            Player player = new Player();
+            match.addPlayer(player);
+
+            //when
+            match.removePlayer(player);
+
+            //then
+            assertFalse(match.getPlayers().contains(player));
+        }
+
+        @Test
+        void CourtStatus_변경있는_정상_일반_테스트() {
+            //given
+            Stadium stadium = new Stadium("Estadio Santiago Bernabeu", "Concha Espinaga 1, 28036");
+            Court court = new Court("베르나베우 A 구장", SIX_TO_SIX);
+            stadium.addCourt(court);
+            Match match = Match.createMatch(court, LocalDateTime.of(2024, 8, 20, 18, 0), LocalDateTime.of(2024, 8, 20, 20, 0), 2);
+            Player player = new Player();
+            match.addPlayer(player);
+
+            //when
+            IntStream.range(0, SIX_TO_SIX.getMaximumPlayer() - 1).forEach(i -> match.addPlayer(new Player()));
+            //then
+            assertEquals(match.getStatus(), CLOSED);
+
+            //when
+            match.removePlayer(player);
+            //then
+            assertEquals(match.getStatus(), AVAILABLE);
+        }
+
+        @Test
+        void 매치에_참여하지않는_유저_경기취소_예외_발생_테스트() {
+            //given
+            Stadium stadium = new Stadium("Estadio Santiago Bernabeu", "Concha Espinaga 1, 28036");
+            Court court = new Court("베르나베우 A 구장", SIX_TO_SIX);
+            stadium.addCourt(court);
+            Match match = Match.createMatch(court, LocalDateTime.of(2024, 8, 20, 18, 0), LocalDateTime.of(2024, 8, 20, 20, 0), 2);
+            Player player1 = new Player();
+            match.addPlayer(player1);
+
+            //when
+            Player player2 = new Player();
+            IllegalStateException exception = assertThrows(IllegalStateException.class, () -> match.removePlayer(player2));
+
+            //then
+            assertEquals(exception.getMessage(), "Player not found");
         }
     }
 }

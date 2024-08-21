@@ -31,9 +31,6 @@ public class Match {
         return new Match(court, startTime, endTime, playTime);
     }
 
-    public boolean contains(final Player player) {
-        return players.contains(player);
-    }
 
     public void addPlayer(final Player player) {
         if (players.contains(player)) {
@@ -43,8 +40,21 @@ public class Match {
             throw new IllegalStateException("Can't add player. Match is not available for new players.");
         }
         players.add(player);
-        if (players.size() >= court.getCourtType().getMinimumPlayer()) {
+        if (players.size() >= court.getCourtType().getMaximumPlayer()) {
             status = MatchStatus.CLOSED;
         }
+    }
+
+    public void removePlayer(final Player player) {
+        if (!players.remove(player)) {
+            throw new IllegalStateException("Player not found");
+        }
+        if (players.size() < court.getCourtType().getMaximumPlayer()) {
+            status = AVAILABLE;
+        }
+    }
+
+    private boolean contains(final Player player) {
+        return players.contains(player);
     }
 }
