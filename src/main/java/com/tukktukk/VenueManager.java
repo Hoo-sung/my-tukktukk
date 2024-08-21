@@ -1,7 +1,6 @@
 package com.tukktukk;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class VenueManager {
         stadium.addCourt(court);
     }
 
-    public Match createMatch(final Court court, final ZonedDateTime startTime, final ZonedDateTime endTime, final Integer playTime) {
+    public Match createMatch(final Court court, final LocalDateTime startTime, final LocalDateTime endTime, final Integer playTime) {
         return Match.createMatch(court, startTime, endTime, playTime);
     }
 

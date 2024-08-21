@@ -4,9 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
+import static com.tukktukk.CourtType.SIX_TO_SIX;
 import static com.tukktukk.MatchStatus.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +15,10 @@ public class VenueManagerTest {
     void Stadium_등록_테스트() {
         //given
         VenueManager venueManager = new VenueManager();
-        Stadium stadium = new Stadium("Estadio Santiago Bernabeu", "Concha Espinaga 1, 28036");
+        Stadium stadium = Stadium.builder()
+                .name("Estadio Santiago Bernabeu")
+                .address("Concha Espinaga 1, 28036")
+                .build();
         //when
         venueManager.registerStadium(stadium);
         //then
@@ -27,9 +29,16 @@ public class VenueManagerTest {
     void Court_등록_테스트() {
         //given
         VenueManager venueManager = new VenueManager();
-        Stadium stadium = new Stadium("Estadio Santiago Bernabeu", "Concha Espinaga 1, 28036");
+        Stadium stadium = Stadium.builder()
+                .name("Estadio Santiago Bernabeu")
+                .address("Concha Espinaga 1, 28036")
+                .build();
+
         venueManager.registerStadium(stadium);
-        Court court = new Court("베르나베우 A 구장", CourtType.SIX_TO_SIX);
+        Court court = Court.builder()
+                .name("베르나베우 A 구장")
+                .courtType(SIX_TO_SIX)
+                .build();
 
         //when
         venueManager.registerCourt(stadium, court);
@@ -41,23 +50,27 @@ public class VenueManagerTest {
     void Match_등록_테스트() {
         //given
         VenueManager venueManager = new VenueManager();
-        Stadium stadium = new Stadium("Estadio Santiago Bernabeu", "Concha Espinaga 1, 28036");
+        Stadium stadium = Stadium.builder()
+                .name("Estadio Santiago Bernabeu")
+                .address("Concha Espinaga 1, 28036")
+                .build();
+
         venueManager.registerStadium(stadium);
-        Court court = new Court("베르나베우 A 구장", CourtType.SIX_TO_SIX);
+        Court court = Court.builder()
+                .name("베르나베우 A 구장")
+                .courtType(SIX_TO_SIX)
+                .build();
         venueManager.registerCourt(stadium, court);
 
         //when
-        Match match = venueManager.createMatch(court, ZonedDateTime.of(2024, 8, 20, 18, 0, 0, 0,
-                ZoneId.of("Asia/Seoul")), ZonedDateTime.of(2024, 8, 20, 20, 0, 0, 0,
-                ZoneId.of("Asia/Seoul")), 2);
+        Match match = Match.createMatch(court, LocalDateTime.of(2024, 8, 20, 18, 0, 0),
+                LocalDateTime.of(2024, 8, 20, 20, 0, 0), 2);
 
         //then
         assertEquals(match.getCourt(), court);
         assertEquals(match.getPlayTime(), 2);
-        assertEquals(match.getStartTime(), ZonedDateTime.of(2024, 8, 20, 18, 0, 0, 0,
-                ZoneId.of("Asia/Seoul")));
-        assertEquals(match.getEndTime(), ZonedDateTime.of(2024, 8, 20, 20, 0, 0, 0,
-                ZoneId.of("Asia/Seoul")));
+        assertEquals(match.getStartTime(), LocalDateTime.of(2024, 8, 20, 18, 0, 0));
+        assertEquals(match.getEndTime(), LocalDateTime.of(2024, 8, 20, 20, 0, 0));
         assertEquals(match.getStatus(), AVAILABLE);
     }
 }

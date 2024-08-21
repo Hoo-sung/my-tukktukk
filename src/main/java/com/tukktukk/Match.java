@@ -1,23 +1,52 @@
 package com.tukktukk;
 
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.tukktukk.MatchStatus.*;
 
 @Getter
+@Entity
+@Table(name = "matchs")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Match {
-    private final Court court;
-    private final ZonedDateTime startTime;
-    private final ZonedDateTime endTime;
-    private final Integer playTime;
-    private final List<Player> players;
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "court_id", nullable = false)
+    private Court court;
+
+    @Column(name = "start_time", nullable = false)
+    private LocalDateTime startTime;
+
+    @Column(name = "end_time", nullable = false)
+    private LocalDateTime endTime;
+
+    @Column(name = "play_time", nullable = false)
+    private Integer playTime;
+
+    @ManyToMany
+    @JoinTable(
+            name = "match_user",
+            joinColumns = @JoinColumn(name = "match_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> players = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
     private MatchStatus status;
 
-    private Match(final Court court, final ZonedDateTime startTime, final ZonedDateTime endTime, final Integer playTime) {
+    private Match(final Court court, final LocalDateTime startTime, final LocalDateTime endTime, final Integer playTime) {
         this.court = court;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -26,13 +55,13 @@ public class Match {
         this.status = AVAILABLE;
     }
 
-    public static Match createMatch(final Court court, final ZonedDateTime startTime,
-                                    final ZonedDateTime endTime, final Integer playTime) {
+    public static Match createMatch(final Court court, final LocalDateTime startTime,
+                                    final LocalDateTime endTime, final Integer playTime) {
         return new Match(court, startTime, endTime, playTime);
     }
 
 
-    public void addPlayer(final Player player) {
+    public void addPlayer(final User player) {
         if (players.contains(player)) {
             throw new IllegalStateException("Player already exists");
         }
@@ -45,7 +74,7 @@ public class Match {
         }
     }
 
-    public void removePlayer(final Player player) {
+    public void removePlayer(final User player) {
         if (!players.remove(player)) {
             throw new IllegalStateException("Player not found");
         }
