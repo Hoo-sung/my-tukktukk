@@ -2,7 +2,7 @@ package com.tukktukk;
 
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,13 +11,13 @@ import static com.tukktukk.MatchStatus.*;
 @Getter
 public class Match {
     private final Court court;
-    private final LocalDateTime startTime;
-    private final LocalDateTime endTime;
+    private final ZonedDateTime startTime;
+    private final ZonedDateTime endTime;
     private final Integer playTime;
     private final List<Player> players;
     private MatchStatus status;
 
-    private Match(final Court court, final LocalDateTime startTime, final LocalDateTime endTime, final Integer playTime) {
+    private Match(final Court court, final ZonedDateTime startTime, final ZonedDateTime endTime, final Integer playTime) {
         this.court = court;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -26,8 +26,8 @@ public class Match {
         this.status = AVAILABLE;
     }
 
-    public static Match createMatch(final Court court, final LocalDateTime startTime,
-                                    final LocalDateTime endTime, final Integer playTime) {
+    public static Match createMatch(final Court court, final ZonedDateTime startTime,
+                                    final ZonedDateTime endTime, final Integer playTime) {
         return new Match(court, startTime, endTime, playTime);
     }
 
@@ -52,9 +52,5 @@ public class Match {
         if (players.size() < court.getCourtType().getMaximumPlayer()) {
             status = AVAILABLE;
         }
-    }
-
-    private boolean contains(final Player player) {
-        return players.contains(player);
     }
 }

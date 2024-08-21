@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.stream.IntStream;
 
 import static com.tukktukk.CourtType.*;
@@ -22,7 +24,9 @@ public class MatchTest {
             Stadium stadium = new Stadium("Estadio Santiago Bernabeu", "Concha Espinaga 1, 28036");
             Court court = new Court("베르나베우 A 구장", SIX_TO_SIX);
             stadium.addCourt(court);
-            Match match = Match.createMatch(court, LocalDateTime.of(2024, 8, 20, 18, 0), LocalDateTime.of(2024, 8, 20, 20, 0), 2);
+            Match match = Match.createMatch(court, ZonedDateTime.of(2024, 8, 20, 18, 0, 0, 0,
+                    ZoneId.of("Asia/Seoul")), ZonedDateTime.of(2024, 8, 20, 20, 0, 0, 0,
+                    ZoneId.of("Asia/Seoul")), 2);
 
             //when
             IntStream.range(0, SIX_TO_SIX.getMinimumPlayer() - 4).forEach(i -> match.addPlayer(new Player()));
@@ -38,7 +42,9 @@ public class MatchTest {
             Stadium stadium = new Stadium("Estadio Santiago Bernabeu", "Concha Espinaga 1, 28036");
             Court court = new Court("베르나베우 A 구장", SIX_TO_SIX);
             stadium.addCourt(court);
-            Match match = Match.createMatch(court, LocalDateTime.of(2024, 8, 20, 18, 0), LocalDateTime.of(2024, 8, 20, 20, 0), 2);
+            Match match = Match.createMatch(court, ZonedDateTime.of(2024, 8, 20, 18, 0, 0, 0,
+                    ZoneId.of("Asia/Seoul")), ZonedDateTime.of(2024, 8, 20, 20, 0, 0, 0,
+                    ZoneId.of("Asia/Seoul")), 2);
             Player player = new Player();
 
             //when
@@ -55,7 +61,9 @@ public class MatchTest {
             Stadium stadium = new Stadium("Estadio Santiago Bernabeu", "Concha Espinaga 1, 28036");
             Court court = new Court("베르나베우 A 구장", SIX_TO_SIX);
             stadium.addCourt(court);
-            Match match = Match.createMatch(court, LocalDateTime.of(2024, 8, 20, 18, 0), LocalDateTime.of(2024, 8, 20, 20, 0), 2);
+            Match match = Match.createMatch(court, ZonedDateTime.of(2024, 8, 20, 18, 0, 0, 0,
+                    ZoneId.of("Asia/Seoul")), ZonedDateTime.of(2024, 8, 20, 20, 0, 0, 0,
+                    ZoneId.of("Asia/Seoul")), 2);
 
             //when
             IntStream.range(0, SIX_TO_SIX.getMaximumPlayer()).forEach(i -> match.addPlayer(new Player()));
@@ -76,7 +84,9 @@ public class MatchTest {
             Stadium stadium = new Stadium("Estadio Santiago Bernabeu", "Concha Espinaga 1, 28036");
             Court court = new Court("베르나베우 A 구장", SIX_TO_SIX);
             stadium.addCourt(court);
-            Match match = Match.createMatch(court, LocalDateTime.of(2024, 8, 20, 18, 0), LocalDateTime.of(2024, 8, 20, 20, 0), 2);
+            Match match = Match.createMatch(court, ZonedDateTime.of(2024, 8, 20, 18, 0, 0, 0,
+                    ZoneId.of("Asia/Seoul")), ZonedDateTime.of(2024, 8, 20, 20, 0, 0, 0,
+                    ZoneId.of("Asia/Seoul")), 2);
             Player player = new Player();
             match.addPlayer(player);
 
@@ -93,7 +103,9 @@ public class MatchTest {
             Stadium stadium = new Stadium("Estadio Santiago Bernabeu", "Concha Espinaga 1, 28036");
             Court court = new Court("베르나베우 A 구장", SIX_TO_SIX);
             stadium.addCourt(court);
-            Match match = Match.createMatch(court, LocalDateTime.of(2024, 8, 20, 18, 0), LocalDateTime.of(2024, 8, 20, 20, 0), 2);
+            Match match = Match.createMatch(court, ZonedDateTime.of(2024, 8, 20, 18, 0, 0, 0,
+                    ZoneId.of("Asia/Seoul")), ZonedDateTime.of(2024, 8, 20, 20, 0, 0, 0,
+                    ZoneId.of("Asia/Seoul")), 2);
             Player player = new Player();
             match.addPlayer(player);
 
@@ -114,7 +126,9 @@ public class MatchTest {
             Stadium stadium = new Stadium("Estadio Santiago Bernabeu", "Concha Espinaga 1, 28036");
             Court court = new Court("베르나베우 A 구장", SIX_TO_SIX);
             stadium.addCourt(court);
-            Match match = Match.createMatch(court, LocalDateTime.of(2024, 8, 20, 18, 0), LocalDateTime.of(2024, 8, 20, 20, 0), 2);
+            Match match = Match.createMatch(court, ZonedDateTime.of(2024, 8, 20, 18, 0, 0, 0,
+                    ZoneId.of("Asia/Seoul")), ZonedDateTime.of(2024, 8, 20, 20, 0, 0, 0,
+                    ZoneId.of("Asia/Seoul")), 2);
             Player player1 = new Player();
             match.addPlayer(player1);
 

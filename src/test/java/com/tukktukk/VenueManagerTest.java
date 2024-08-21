@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import static com.tukktukk.MatchStatus.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,14 +47,17 @@ public class VenueManagerTest {
         venueManager.registerCourt(stadium, court);
 
         //when
-        Match match = venueManager.createMatch(court, LocalDateTime.of(2024, 8, 25, 18, 0),
-                LocalDateTime.of(2024, 8, 25, 20, 0), 2);
+        Match match = venueManager.createMatch(court, ZonedDateTime.of(2024, 8, 20, 18, 0, 0, 0,
+                ZoneId.of("Asia/Seoul")), ZonedDateTime.of(2024, 8, 20, 20, 0, 0, 0,
+                ZoneId.of("Asia/Seoul")), 2);
 
         //then
         assertEquals(match.getCourt(), court);
         assertEquals(match.getPlayTime(), 2);
-        assertEquals(match.getStartTime(), LocalDateTime.of(2024, 8, 25, 18, 0));
-        assertEquals(match.getEndTime(), LocalDateTime.of(2024, 8, 25, 20, 0));
+        assertEquals(match.getStartTime(), ZonedDateTime.of(2024, 8, 20, 18, 0, 0, 0,
+                ZoneId.of("Asia/Seoul")));
+        assertEquals(match.getEndTime(), ZonedDateTime.of(2024, 8, 20, 20, 0, 0, 0,
+                ZoneId.of("Asia/Seoul")));
         assertEquals(match.getStatus(), AVAILABLE);
     }
 }
