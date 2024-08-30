@@ -19,4 +19,11 @@ public class CouponIssueService {
         couponRepository.save(coupon);// ?
     }
 
+    @Transactional
+    public void issueWithPessimisticReadLock(Long userKey, Long couponKey) {
+        Coupon coupon = couponRepository.findReadLockByCouponKey(couponKey);
+        coupon.issue(userKey);
+        couponRepository.save(coupon);
+    }
+
 }

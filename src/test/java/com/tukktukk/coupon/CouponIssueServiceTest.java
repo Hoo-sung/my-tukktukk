@@ -73,4 +73,29 @@ public class CouponIssueServiceTest {
 //        assertThat(result.getRemainedStock()).isNotEqualTo(0l);
     }
 
+    @Test
+    void 비관적_락_Shared_lock_을_통한_동시성_제어_테스트() throws InterruptedException {
+        //given
+        Coupon coupon = new Coupon("할인_이벤트", 100L);
+        Long couponKey = couponRepository.save(coupon).getCouponKey();
+        //when
+        for (long i = 1; i <= TOTAL_REQUESTS; i++) {
+            final Long userKey = i;
+            executor.submit(() -> {
+                try {
+                    couponIssueService.issueWithPessimisticReadLock(userKey, couponKey);
+                } finally {
+                    latch.countDown();
+                }
+            });
+        }
+
+        latch.await();
+
+        //then
+        assertThat(couponUserRepository.countByCoupon_CouponKey(couponKey)).isEqualTo(100l);
+        Coupon result = couponRepository.findById(couponKey).get();
+        assertThat(result.getRemainedStock()).isEqualTo(0l);
+    }
+
 }
