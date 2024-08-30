@@ -1,4 +1,4 @@
-package com.tukktukk.concurrencyTest;
+package com.tukktukk.coupon.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -32,14 +32,20 @@ public class Coupon {
         return Collections.unmodifiableSet(couponUsers);
     }
 
+    public Coupon (String name, Long remainedStock) {
+        this.name = name;
+        this.remainedStock = remainedStock;
+    }
     public void issue(Long userKey) {
         if (remainedStock < 1) {
-            throw new IllegalStateException("Remained stock is less than 1!");
+            return;
+//            throw new IllegalStateException("Remained stock is less than 1!");
         }
         CouponUser couponUser = new CouponUser(this, userKey);
 
         if (couponUsers.contains(couponUser)) {
-            throw new IllegalStateException("Coupon already exists!");
+            return;
+//            throw new IllegalStateException("Coupon already exists!");
         }
 
         this.couponUsers.add(couponUser);

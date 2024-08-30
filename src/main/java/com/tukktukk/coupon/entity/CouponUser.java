@@ -1,4 +1,4 @@
-package com.tukktukk.concurrencyTest;
+package com.tukktukk.coupon.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
