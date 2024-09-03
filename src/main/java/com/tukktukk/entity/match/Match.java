@@ -1,17 +1,18 @@
 package com.tukktukk.entity.match;
 
+import com.tukktukk.entity.court.CourtType;
 import com.tukktukk.entity.user.User;
 import com.tukktukk.entity.court.Court;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.tukktukk.entity.match.ApplyStatus.*;
 import static com.tukktukk.entity.match.MatchStatus.*;
 
 @Getter
@@ -55,7 +56,7 @@ public class Match {
         this.endTime = endTime;
         this.playTime = playTime;
         this.players = new ArrayList<>();
-        this.status = AVAILABLE;
+        this.status = SCHEDULED;
     }
 
     public static Match createMatch(final Court court, final LocalDateTime startTime,
@@ -68,26 +69,38 @@ public class Match {
         if (players.contains(player)) {
             throw new IllegalStateException("Player already exists");
         }
-        if (status != AVAILABLE) {
+        if (players.size() >= court.getCourtMaximumPlayer()) {
             throw new IllegalStateException("Can't add player. Match is not available for new players.");
         }
         players.add(player);
-        if (players.size() >= court.getCourtType().getMaximumPlayer()) {
-            status = MatchStatus.CLOSED;
-        }
+        this.calculateStatus();
     }
 
     public void removePlayer(final User player) {
         if (!players.remove(player)) {
             throw new IllegalStateException("Player not found");
         }
-        if (players.size() < court.getCourtType().getMaximumPlayer()) {
-            status = AVAILABLE;
+        if (players.size() < court.getCourtMinimumPlayer()) {
+            status = SCHEDULED;
         }
     }
 
     public void cancel() {
         status = CANCELED;
+    }
+
+    private void calculateStatus() {
+        int currentPlayer = players.size();
+        CourtType courtType = court.getCourtType();
+
+        if (currentPlayer < courtType.getMinimumPlayer()) {
+            this.status = SCHEDULED;
+        } else if (currentPlayer >= courtType.getMinimumPlayer() && currentPlayer < courtType.getMaximumPlayer()) {
+            this.status = CONFIRMED;
+        } else if (currentPlayer == courtType.getMaximumPlayer()) {
+            this.status = CONFIRMED; // 이미 CONFIRMED 상태이며, 인원이 최대치인 경우
+            // 추가 로직을 통해 "인원 다참" 상태를 나타낼 수 있습니다 (ex: 로그 출력 또는 별도 변수 설정)
+        }
     }
 
     @Override

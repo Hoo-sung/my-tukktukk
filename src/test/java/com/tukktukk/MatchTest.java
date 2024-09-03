@@ -11,8 +11,6 @@ import java.time.LocalDateTime;
 import java.util.stream.IntStream;
 
 import static com.tukktukk.entity.court.CourtType.*;
-import static com.tukktukk.entity.match.MatchStatus.*;
-import static com.tukktukk.entity.match.MatchStatus.AVAILABLE;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MatchTest {

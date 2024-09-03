@@ -16,5 +16,4 @@ public enum CourtType {
         this.minimumPlayer = minimumPlayer;
         this.maximumPlayer = maximumPlayer;
     }
-
 }

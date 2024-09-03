@@ -24,4 +24,12 @@ public class Court {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stadium_id", nullable = false)
     private Stadium stadium;
+
+    public int getCourtMinimumPlayer(){
+        return courtType.getMinimumPlayer();
+    }
+
+    public int getCourtMaximumPlayer(){
+        return courtType.getMaximumPlayer();
+    }
 }
