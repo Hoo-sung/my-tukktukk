@@ -1,12 +1,16 @@
 package com.tukktukk;
 
+import com.tukktukk.entity.Court;
+import com.tukktukk.entity.Match;
+import com.tukktukk.entity.Stadium;
+import com.tukktukk.entity.VenueManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static com.tukktukk.CourtType.SIX_TO_SIX;
-import static com.tukktukk.MatchStatus.*;
+import static com.tukktukk.entity.CourtType.SIX_TO_SIX;
+import static com.tukktukk.entity.MatchStatus.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class VenueManagerTest {

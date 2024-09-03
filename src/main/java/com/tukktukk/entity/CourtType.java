@@ -1,4 +1,4 @@
-package com.tukktukk;
+package com.tukktukk.entity;
 
 import lombok.Getter;
 

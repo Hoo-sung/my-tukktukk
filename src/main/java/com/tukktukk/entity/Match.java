@@ -1,4 +1,4 @@
-package com.tukktukk;
+package com.tukktukk.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.tukktukk.MatchStatus.*;
+import static com.tukktukk.entity.MatchStatus.*;
 
 @Getter
 @Entity
@@ -81,5 +81,9 @@ public class Match {
         if (players.size() < court.getCourtType().getMaximumPlayer()) {
             status = AVAILABLE;
         }
+    }
+
+    public void cancel(){
+        status = CANCELED;
     }
 }

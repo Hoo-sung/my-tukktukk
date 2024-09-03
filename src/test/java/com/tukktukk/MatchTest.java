@@ -1,14 +1,18 @@
 package com.tukktukk;
 
+import com.tukktukk.entity.Court;
+import com.tukktukk.entity.Match;
+import com.tukktukk.entity.Stadium;
+import com.tukktukk.entity.User;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.stream.IntStream;
 
-import static com.tukktukk.CourtType.*;
-import static com.tukktukk.MatchStatus.*;
-import static com.tukktukk.MatchStatus.AVAILABLE;
+import static com.tukktukk.entity.CourtType.*;
+import static com.tukktukk.entity.MatchStatus.*;
+import static com.tukktukk.entity.MatchStatus.AVAILABLE;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MatchTest {

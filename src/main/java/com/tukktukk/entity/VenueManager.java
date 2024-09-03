@@ -1,4 +1,4 @@
-package com.tukktukk;
+package com.tukktukk.entity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

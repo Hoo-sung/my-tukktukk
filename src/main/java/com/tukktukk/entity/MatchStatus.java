@@ -1,4 +1,4 @@
-package com.tukktukk;
+package com.tukktukk.entity;
 
 public enum MatchStatus {
     AVAILABLE("신청 가능"),
@@ -9,6 +9,5 @@ public enum MatchStatus {
         this.status = status;
     }
 
-    private String status;
-
+    private final String status;
 }
