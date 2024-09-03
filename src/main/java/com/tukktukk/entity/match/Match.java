@@ -1,15 +1,18 @@
-package com.tukktukk.entity;
+package com.tukktukk.entity.match;
 
+import com.tukktukk.entity.user.User;
+import com.tukktukk.entity.court.Court;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.tukktukk.entity.MatchStatus.*;
+import static com.tukktukk.entity.match.MatchStatus.*;
 
 @Getter
 @Entity
@@ -22,7 +25,7 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "court_id", nullable = false)
     private Court court;
 
@@ -83,7 +86,17 @@ public class Match {
         }
     }
 
-    public void cancel(){
+    public void cancel() {
         status = CANCELED;
+    }
+
+    @Override
+    public String toString() {
+        return "Match{" +
+                "id=" + id +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", playTime=" + playTime +
+                '}';
     }
 }

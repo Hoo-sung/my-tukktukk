@@ -1,5 +1,6 @@
-package com.tukktukk.entity;
+package com.tukktukk.entity.stadium;
 
+import com.tukktukk.entity.court.Court;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

@@ -1,5 +1,6 @@
-package com.tukktukk.entity;
+package com.tukktukk.entity.user;
 
+import com.tukktukk.entity.match.Match;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

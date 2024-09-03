@@ -1,5 +1,6 @@
-package com.tukktukk.entity;
+package com.tukktukk.entity.court;
 
+import com.tukktukk.entity.stadium.Stadium;
 import jakarta.persistence.*;
 import lombok.*;
 

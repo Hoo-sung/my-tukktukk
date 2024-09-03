@@ -1,4 +1,4 @@
-package com.tukktukk.entity;
+package com.tukktukk.entity.match;
 
 public enum MatchStatus {
     AVAILABLE("신청 가능"),

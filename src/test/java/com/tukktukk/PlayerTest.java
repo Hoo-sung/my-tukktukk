@@ -1,16 +1,16 @@
 package com.tukktukk;
 
 
-import com.tukktukk.entity.Court;
-import com.tukktukk.entity.Match;
-import com.tukktukk.entity.Stadium;
-import com.tukktukk.entity.User;
+import com.tukktukk.entity.court.Court;
+import com.tukktukk.entity.match.Match;
+import com.tukktukk.entity.stadium.Stadium;
+import com.tukktukk.entity.user.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static com.tukktukk.entity.CourtType.*;
+import static com.tukktukk.entity.court.CourtType.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class PlayerTest {

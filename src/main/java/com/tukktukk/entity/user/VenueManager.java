@@ -1,4 +1,8 @@
-package com.tukktukk.entity;
+package com.tukktukk.entity.user;
+
+import com.tukktukk.entity.stadium.Stadium;
+import com.tukktukk.entity.court.Court;
+import com.tukktukk.entity.match.Match;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
